@@ -35,8 +35,8 @@ GPIO.output(Motor1A,GPIO.LOW)
 GPIO.output(Motor1B,GPIO.HIGH)
 GPIO.output(Motor1E,GPIO.HIGH)
  
-GPIO.output(Motor2A,GPIO.LOW)
-GPIO.output(Motor2B,GPIO.HIGH)
+GPIO.output(Motor2A,GPIO.HIGH)
+GPIO.output(Motor2B,GPIO.LOW)
 GPIO.output(Motor2E,GPIO.HIGH)
  
 sleep(5)
