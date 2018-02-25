@@ -1,13 +1,8 @@
 import RPi.GPIO as GPIO
 from time import sleep
 
-Trig = 23         # Pin Trig (HC-SR04 - GPIO 23)
-Echo = 24         # Sortie Echo (HC-SR04 - GPIO 24)
-GPIO.setmode(GPIO.BOARD)
-GPIO.setup(Trig, GPIO.OUT)
-GPIO.setup(Echo, GPIO.IN)
 
-GPIO.output(Trig, False)
+GPIO.setmode(GPIO.BOARD)
 
 Motor1A = 16
 Motor1B = 18
@@ -46,8 +41,18 @@ def get_distance(trig_pin, echo_pin):
 		distance_average = distance_average + dist
 	return distance_average / 10
 
+Trig = 20	# Pin Trig (HC-SR04 - GPIO 23)
+Echo = 21	# Sortie Echo (HC-SR04 - GPIO 24)
+
+GPIO.setup(Trig, GPIO.OUT)
+GPIO.setup(Echo, GPIO.IN)
+
+GPIO.output(Trig, False)
+
+print "Distance: ", get_distance(Trig, Echo), " cm"
+
 while x == 0:
-	if distance_average(Trig, Echo) > 20:
+	if get_distance(Trig, Echo) > 20:
 		print "Going forwards"
 		GPIO.output(Motor1A,GPIO.HIGH)
 		GPIO.output(Motor1B,GPIO.LOW)
