@@ -1,4 +1,4 @@
-#import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 from time import sleep
 import requests
 from playsound import playsound
@@ -49,19 +49,46 @@ yt = raw_input()
 
 # GPIO.output(trig_forward, False)
 
+
 current_likes = get_nbr_likes()
 current_dislikes = get_nbr_dislikes()
 tmp = 0
+
+GPIO.setmode(GPIO.BOARD)
+
+Motor1A = 16
+Motor1B = 18
+Motor1E = 22
+ 
+Motor2A = 23
+Motor2B = 21
+Motor2E = 19
+
+GPIO.setup(Motor1A,GPIO.OUT)
+GPIO.setup(Motor1B,GPIO.OUT)
+GPIO.setup(Motor1E,GPIO.OUT)
+ 
+GPIO.setup(Motor2A,GPIO.OUT)
+GPIO.setup(Motor2B,GPIO.OUT)
+GPIO.setup(Motor2E,GPIO.OUT)
 
 while (1):
 	tmp = current_likes
 	current_likes = get_nbr_likes()
 	if current_likes > tmp:
-		print("like")
+		playsound("like.ogg")
 	tmp = current_dislikes
 	current_dislikes = get_nbr_dislikes()
 	if current_dislikes > tmp:
-		print("dislike")
-	#if get_distance(trig_forward, echo_forward) <= 15:
-		#trop proche d'un mur
-	##avance
+		playsound("dislike.ogg")
+
+	GPIO.output(Motor1A,GPIO.HIGH)
+	GPIO.output(Motor1B,GPIO.LOW)
+	GPIO.output(Motor1E,GPIO.HIGH)
+
+	GPIO.output(Motor2A,GPIO.HIGH)
+	GPIO.output(Motor2B,GPIO.LOW)
+	GPIO.output(Motor2E,GPIO.HIGH)
+# 	#if get_distance(trig_forward, echo_forward) <= 15:
+# 		#trop proche d'un mur
+# 	##avance
