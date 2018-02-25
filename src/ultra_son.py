@@ -22,8 +22,8 @@ def get_distance(trig_pin, echo_pin):
 ##### BEGINNING #####
 GPIO.setmode(GPIO.BCM)
 
-Trig = 23         # Pin Trig (HC-SR04 - GPIO 23)
-Echo = 24         # Sortie Echo (HC-SR04 - GPIO 24)
+Trig = 20	# Pin Trig (HC-SR04 - GPIO 23)
+Echo = 21	# Sortie Echo (HC-SR04 - GPIO 24)
 
 GPIO.setup(Trig, GPIO.OUT)
 GPIO.setup(Echo, GPIO.IN)
