@@ -1,5 +1,6 @@
 import RPi.GPIO as GPIO
 from time import sleep
+import time
 
 
 GPIO.setmode(GPIO.BOARD)
@@ -41,8 +42,8 @@ def get_distance(trig_pin, echo_pin):
 		distance_average = distance_average + dist
 	return distance_average / 10
 
-Trig = 20	# Pin Trig (HC-SR04 - GPIO 23)
-Echo = 21	# Sortie Echo (HC-SR04 - GPIO 24)
+Trig = 38	# Pin Trig (HC-SR04 - GPIO 23)
+Echo = 40	# Sortie Echo (HC-SR04 - GPIO 24)
 
 GPIO.setup(Trig, GPIO.OUT)
 GPIO.setup(Echo, GPIO.IN)
@@ -61,33 +62,12 @@ while x == 0:
 		GPIO.output(Motor2B,GPIO.LOW)
 		GPIO.output(Motor2E,GPIO.HIGH)
 	else:
-		x += 1
-
-
-print "Going backwards"
-GPIO.output(Motor1A,GPIO.LOW)
-GPIO.output(Motor1B,GPIO.HIGH)
-GPIO.output(Motor1E,GPIO.HIGH)
-
-GPIO.output(Motor2A,GPIO.LOW)
-GPIO.output(Motor2B,GPIO.HIGH)
-GPIO.output(Motor2E,GPIO.HIGH)
-
-sleep(3)
-
-print "Turn Back"
-GPIO.output(Motor1A,GPIO.HIGH)
-GPIO.output(Motor1B,GPIO.LOW)
-GPIO.output(Motor1E,GPIO.HIGH)
-
-GPIO.output(Motor2A,GPIO.LOW)
-GPIO.output(Motor2B,GPIO.HIGH)
-GPIO.output(Motor2E,GPIO.HIGH)
-
-sleep(3)
-
-print "Now stop"
-GPIO.output(Motor1E,GPIO.LOW)
-GPIO.output(Motor2E,GPIO.LOW)
-
+		while get_distance(Trig, Echo) < 20: 
+			GPIO.output(Motor1A,GPIO.LOW)
+                	GPIO.output(Motor1B,GPIO.LOW)
+                	GPIO.output(Motor1E,GPIO.LOW)
+                	GPIO.output(Motor2A,GPIO.HIGH)
+                	GPIO.output(Motor2B,GPIO.LOW)
+                	GPIO.output(Motor2E,GPIO.HIGH)
+			sleep(0.35)
 GPIO.cleanup()
